@@ -1,0 +1,141 @@
+{
+  "version": 1,
+  "projects": {
+    "busipay": {
+      "projectType": "application",
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/busipay",
+      "sourceRoot": "apps/busipay/src",
+      "prefix": "busipay",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/busipay",
+            "index": "apps/busipay/src/index.html",
+            "main": "apps/busipay/src/main.ts",
+            "polyfills": "apps/busipay/src/polyfills.ts",
+            "tsConfig": "apps/busipay/tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "apps/busipay/src/favicon.ico",
+              "apps/busipay/src/assets"
+            ],
+            "styles": ["apps/busipay/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/busipay/src/environments/environment.ts",
+                  "with": "apps/busipay/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "busipay:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "busipay:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "busipay:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/busipay/tsconfig.app.json",
+              "apps/busipay/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/busipay/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/busipay/jest.config.js",
+            "tsConfig": "apps/busipay/tsconfig.spec.json",
+            "setupFile": "apps/busipay/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "busipay-e2e": {
+      "root": "apps/busipay-e2e",
+      "sourceRoot": "apps/busipay-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/busipay-e2e/cypress.json",
+            "tsConfig": "apps/busipay-e2e/tsconfig.e2e.json",
+            "devServerTarget": "busipay:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "busipay:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["apps/busipay-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/busipay-e2e/**"]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "schematics": {
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    }
+  },
+  "defaultProject": "busipay"
+}
