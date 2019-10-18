@@ -4,6 +4,8 @@ import {
   FileSystemFileEntry,
   FileSystemDirectoryEntry
 } from 'ngx-file-drop';
+import * as AWS from 'aws-sdk';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'busipay-dnd',
@@ -11,46 +13,49 @@ import {
   styleUrls: ['./dnd.component.scss']
 })
 export class DndComponent implements OnInit {
-  constructor() {}
-
   public files: NgxFileDropEntry[] = [];
+  bucketName = 'busipay';
+  bucketRegion = 'eu-west-1';
+  IdentityPoolId = 'eu-west-1:ef71e09a-28e0-40fd-91a7-a3479c4ec1da';
+  s3;
+  uploadTimestamp: number;
+
+  constructor(private _snackBar: MatSnackBar) {
+    AWS.config.update({
+      region: this.bucketRegion,
+      credentials: new AWS.CognitoIdentityCredentials({
+        IdentityPoolId: this.IdentityPoolId
+      })
+    });
+    this.s3 = new AWS.S3({
+      apiVersion: '2006-03-01',
+      params: { Bucket: this.bucketName }
+    });
+  }
 
   ngOnInit() {}
 
   public dropped(files: NgxFileDropEntry[]) {
     this.files = files;
+    this.uploadTimestamp = Date.now();
     for (const droppedFile of files) {
       // Is it a file?
       if (droppedFile.fileEntry.isFile) {
         const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
         fileEntry.file((file: File) => {
+          //Todo: Perform File Size Check First
           if (
-            file.type === 'application/pdf' ||
-            file.type === 'image/png' ||
-            file.type === 'image/jpeg'
+            ['application/pdf', 'image/png', 'image/jpeg'].find(
+              t => t === file.type
+            )
           ) {
             // Here you can access the real file
             console.log('File allowed');
             console.log(droppedFile.relativePath, file);
-
-            /**
-            // You could upload it like this:
-            const formData = new FormData()
-            formData.append('logo', file, relativePath)
-  
-            // Headers
-            const headers = new HttpHeaders({
-              'security-token': 'mytoken'
-            })
-  
-            this.http.post('https://mybackend.com/api/upload/sanitize-and-save-logo', formData, { headers: headers, responseType: 'blob' })
-            .subscribe(data => {
-              // Sanitized logo returned from backend
-            })
-          **/
+            this.uploadToS3(file);
           } else {
             // File type is not allowed
-            console.log('File allowed');
+            console.log('File is not allowed');
             console.log(droppedFile.relativePath, file);
             return;
           }
@@ -70,5 +75,34 @@ export class DndComponent implements OnInit {
 
   public fileLeave(event) {
     console.log(event);
+  }
+
+  public uploadToS3(file) {
+    const fileUploadPromise = this.s3
+      .upload({
+        Key: this.uploadTimestamp + '/' + file.name,
+        Bucket: this.bucketName,
+        Body: file,
+        ACL: 'private'
+      })
+      .promise();
+
+    fileUploadPromise
+      .then(data => {
+        this._snackBar.open('Invoice(s) successfully uploaded.', '', {
+          duration: 3000,
+          horizontalPosition: 'right',
+          verticalPosition: 'bottom',
+          panelClass: 'snack-bar-success'
+        });
+      })
+      .catch((error: any) => {
+        this._snackBar.open('Something went wrong.', '', {
+          duration: 3000,
+          horizontalPosition: 'right',
+          verticalPosition: 'bottom',
+          panelClass: 'snack-bar-failure'
+        });
+      });
   }
 }

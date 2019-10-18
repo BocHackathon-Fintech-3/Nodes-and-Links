@@ -26,3 +26,15 @@
     }
   }
 }
+
+::ng-deep .snack-bar-success {
+  color: #fafafa;
+  background-color: #388e3c;
+  border-color: #388e3c;
+}
+
+::ng-deep .snack-bar-failure {
+  color: #fafafa;
+  background-color: #d32f2f;
+  border-color: #d32f2f;
+}
