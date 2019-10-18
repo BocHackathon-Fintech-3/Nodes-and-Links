@@ -9,7 +9,7 @@ import { Router, NavigationStart } from '@angular/router';
 })
 export class BocLoginComponent implements OnInit {
   loginUrl: string;
-
+  handle;
   constructor(private boc: BocService, private router: Router) {}
 
   ngOnInit() {
@@ -21,11 +21,30 @@ export class BocLoginComponent implements OnInit {
             window.close();
           });
         } else {
-          this.boc.getLoginUrl().subscribe(({ loginUrl }: any) => {
-            this.loginUrl = loginUrl;
-          });
+          this.boc.getAvailableBalance().subscribe(
+            () => {},
+            () => {
+              this.boc.getLoginUrl().subscribe(({ loginUrl }: any) => {
+                this.loginUrl = loginUrl;
+              });
+            }
+          );
         }
       }
     });
   }
+
+  click = () => {
+    if (this.handle) {
+      clearInterval(this.handle);
+      this.handle = null;
+    }
+    this.handle = setInterval(() => {
+      this.boc.getAvailableBalance().subscribe(() => {
+        clearInterval(this.handle);
+        this.handle = null;
+        this.loginUrl = null;
+      });
+    }, 3000);
+  };
 }

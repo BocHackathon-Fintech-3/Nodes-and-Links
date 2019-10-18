@@ -8,9 +8,11 @@ import { BocLoginComponent } from './components/boc-login/boc-login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { APP_ROUTES } from './app.routes';
+import { AvailableBalanceComponent } from './components/available-balance/available-balance.component';
+import { PayComponent } from './components/pay/pay.component';
 
 @NgModule({
-  declarations: [AppComponent, BocLoginComponent],
+  declarations: [AppComponent, BocLoginComponent, AvailableBalanceComponent, PayComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

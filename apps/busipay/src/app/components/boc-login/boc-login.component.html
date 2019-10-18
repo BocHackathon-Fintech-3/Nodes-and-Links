@@ -1,3 +1,8 @@
-<a mat-raised-button *ngIf="loginUrl" [href]="loginUrl" target="_blank"
+<a
+  mat-raised-button
+  *ngIf="loginUrl"
+  [href]="loginUrl"
+  target="_blank"
+  (click)="click()"
   >Login</a
 >
