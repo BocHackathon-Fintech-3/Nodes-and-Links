@@ -25,7 +25,10 @@
               "apps/busipay/src/favicon.ico",
               "apps/busipay/src/assets"
             ],
-            "styles": ["apps/busipay/src/styles.scss"],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
+              "apps/busipay/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -84,7 +87,10 @@
               "apps/busipay/tsconfig.app.json",
               "apps/busipay/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/busipay/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/busipay/**"
+            ]
           }
         },
         "test": {
@@ -118,8 +124,13 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["apps/busipay-e2e/tsconfig.e2e.json"],
-            "exclude": ["**/node_modules/**", "!apps/busipay-e2e/**"]
+            "tsConfig": [
+              "apps/busipay-e2e/tsconfig.e2e.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/busipay-e2e/**"
+            ]
           }
         }
       }
