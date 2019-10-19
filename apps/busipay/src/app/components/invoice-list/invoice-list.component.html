@@ -14,7 +14,7 @@
       <mat-list-item
         *ngFor="let item of data"
         (click)="click(item)"
-        [ngClass]="{ active: item.img === selectedItem }"
+        [ngClass]="{ active: item.title === selectedItem }"
         style="display: inline-block;"
       >
         <mat-card class="col-md-12"
@@ -23,7 +23,7 @@
             style="position:relative;float:left;top: 6px;"
           ></mat-checkbox>
           <mat-card-header>
-            <mat-card-title>{{ item.img }}</mat-card-title>
+            <mat-card-title>{{ item.title }}</mat-card-title>
           </mat-card-header>
           <mat-card-content>
             <mat-form-field>
@@ -32,6 +32,7 @@
             <mat-form-field>
               <input
                 matInput
+                type="number"
                 placeholder="Balance Due"
                 [(ngModel)]="item.balance"
               />
@@ -44,7 +45,7 @@
   <div class="col-md-8" style="overflow: auto;height: 100%;">
     <div *ngFor="let item of data">
       <busipay-image-subset
-        *ngIf="item.img === selectedItem"
+        *ngIf="item.title === selectedItem"
         [src]="item.img"
         [boxes]="item.boxes"
       ></busipay-image-subset>

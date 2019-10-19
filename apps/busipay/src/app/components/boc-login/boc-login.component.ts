@@ -48,4 +48,12 @@ export class BocLoginComponent implements OnInit {
       });
     }, 3000);
   };
+
+  logout = () => {
+    this.boc.logout().subscribe(() => {
+      this.boc.getLoginUrl().subscribe(({ loginUrl }: any) => {
+        this.loginUrl = loginUrl;
+      });
+    });
+  };
 }

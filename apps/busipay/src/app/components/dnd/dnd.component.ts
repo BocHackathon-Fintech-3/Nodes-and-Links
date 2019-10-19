@@ -22,6 +22,8 @@ export class DndComponent implements OnInit {
   IdentityPoolId = 'eu-west-1:ef71e09a-28e0-40fd-91a7-a3479c4ec1da';
   s3;
   uploadTimestamp: number;
+  loading = false;
+  progress = 0;
 
   constructor(
     private _router: Router,
@@ -46,35 +48,51 @@ export class DndComponent implements OnInit {
   public dropped(files: NgxFileDropEntry[]) {
     this.files = files;
     this.uploadTimestamp = Date.now();
-    for (const droppedFile of files) {
-      // Is it a file?
-      if (droppedFile.fileEntry.isFile) {
-        const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
-        fileEntry.file((file: File) => {
-          //Todo: Perform File Size Check First
-          if (
-            ['application/pdf', 'image/png', 'image/jpeg'].find(
-              t => t === file.type
-            )
-          ) {
-            // Here you can access the real file
-            console.log('File allowed');
-            console.log(droppedFile.relativePath, file);
-            this.uploadToS3(file);
-          } else {
-            // File type is not allowed
-            console.log('File is not allowed');
-            console.log(droppedFile.relativePath, file);
-            return;
-          }
+    let counter = 0;
+    let progressCounter = 0;
+    this.loading = true;
+    Promise.all(
+      files.map(droppedFile => {
+        return new Promise(res => {
+          setTimeout(() => {
+            // Is it a file?
+            if (droppedFile.fileEntry.isFile) {
+              const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
+              fileEntry.file(async (file: File) => {
+                //Todo: Perform File Size Check First
+                if (
+                  ['application/pdf', 'image/png', 'image/jpeg'].find(
+                    t => t === file.type
+                  )
+                ) {
+                  // Here you can access the real file
+                  console.log('File allowed');
+                  console.log(droppedFile.relativePath, file);
+                  await this.uploadToS3(file);
+                  progressCounter++;
+                  this.progress = (progressCounter * 100) / files.length;
+                  res();
+                } else {
+                  // File type is not allowed
+                  console.log('File is not allowed');
+                  console.log(droppedFile.relativePath, file);
+                  return;
+                }
+              });
+            } else {
+              // It was a directory (empty directories are added, otherwise only files)
+              const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
+              console.log('Files Directory');
+              console.log(droppedFile.relativePath, fileEntry);
+            }
+          }, 3000 * counter++);
         });
-      } else {
-        // It was a directory (empty directories are added, otherwise only files)
-        const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
-        console.log('Files Directory');
-        console.log(droppedFile.relativePath, fileEntry);
-      }
-    }
+      })
+    ).then(() => {
+      this.loading = false;
+      this.progress = 0;
+      this._router.navigate(['/review', this.uploadTimestamp]);
+    });
 
     // this.invoiceService.getAll(this.uploadTimestamp);
     // this.invoiceService.getAll().then(invoices => {
@@ -100,18 +118,16 @@ export class DndComponent implements OnInit {
       })
       .promise();
 
-    fileUploadPromise
+    return fileUploadPromise
       .then(data => {
         console.log(data);
-        this.textractService.process(this.uploadTimestamp, data).subscribe();
-        this._snackBar.open('Invoice(s) successfully uploaded.', '', {
-          duration: 3000,
-          horizontalPosition: 'right',
-          verticalPosition: 'bottom',
-          panelClass: 'snack-bar-success'
+        return new Promise(res => {
+          this.textractService
+            .process(this.uploadTimestamp, data)
+            .subscribe(() => {
+              res();
+            });
         });
-
-        this._router.navigate(['/review', this.uploadTimestamp]);
       })
       .catch((error: any) => {
         this._snackBar.open('Something went wrong.', '', {

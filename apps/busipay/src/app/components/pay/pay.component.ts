@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { BocService } from '../../api/boc.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'busipay-pay',
@@ -9,7 +10,7 @@ import { BocService } from '../../api/boc.service';
 export class PayComponent implements OnInit {
   @Input() toPay: any[];
   availableBalance;
-  constructor(private boc: BocService) {}
+  constructor(private boc: BocService, private spinner: NgxSpinnerService) {}
 
   ngOnInit() {
     this.boc.availableBalanceChanged.subscribe(() => {
@@ -25,6 +26,7 @@ export class PayComponent implements OnInit {
   }
 
   click() {
+    this.spinner.show('pay');
     this.boc
       .pay(
         this.toPay
@@ -32,6 +34,7 @@ export class PayComponent implements OnInit {
           .map(item => ({ amount: item.balance, iban: item.iban }))
       )
       .subscribe(() => {
+        this.spinner.hide('pay');
         this.boc.availableBalanceChanged.next();
       });
   }

@@ -30,7 +30,7 @@ export class InvoiceService {
     console.log('S3 get all', uploadTimestamp);
     const params = {
       Bucket: this.bucketName,
-      Prefix: !!uploadTimestamp ? '${uploadTimestamp}/' : ''
+      Prefix: !!uploadTimestamp ? `${uploadTimestamp}/` : ''
     };
     const data = await this.s3.listObjects(params).promise();
     console.log(data.Contents);
