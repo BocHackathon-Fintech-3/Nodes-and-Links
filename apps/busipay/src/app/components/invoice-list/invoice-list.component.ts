@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { InvoiceService } from '../../api/invoice.service';
 import * as _ from 'lodash';
+import { computePairs } from './helper';
 
 @Component({
   selector: 'busipay-invoice-list',
@@ -41,20 +42,36 @@ export class InvoiceListComponent implements OnInit {
       this.invoiceService.getAll(uploadTimestamp).then(rawData => {
         rawData = rawData[uploadTimestamp];
         this.data = _.map(rawData, (rawDataVal, rawDataKey) => {
-          const block = rawDataVal.json.Blocks[1];
+          const pairs = computePairs(rawDataVal.json);
+          console.log('pairs', pairs);
+          let totalKey;
+          let totalBlockWithValue;
+          let totalLabel;
+          _.each(pairs, (blockWithValue, key) => {
+            const possibilities = ['TOTAL', 'Invoice Total'];
+            const foundLabel = possibilities.find(
+              pos => pos.toLowerCase() === key.toLowerCase()
+            );
+            if (foundLabel) {
+              totalKey = key;
+              totalBlockWithValue = blockWithValue;
+              totalLabel = foundLabel;
+            }
+          });
+          const block = totalBlockWithValue.block;
           const boundingBox = block.Geometry.BoundingBox;
           return {
             title: rawDataKey,
             img: rawDataVal.img_url,
             pay: true,
-            balance: 1234,
+            balance: totalBlockWithValue.val,
             boxes: [
               {
                 top: boundingBox.Top,
                 left: boundingBox.Left,
                 width: boundingBox.Width,
                 height: boundingBox.Height,
-                label: block.Text
+                label: totalLabel
               }
             ]
           };
