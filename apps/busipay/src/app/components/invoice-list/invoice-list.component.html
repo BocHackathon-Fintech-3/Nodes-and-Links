@@ -1,5 +1,5 @@
-<div style="position: absolute;width: 100%;" class="row">
-  <div class="col-md-8">
+<div style="width: 100%;height:100%;" class="row">
+  <div class="col-md-8" style="overflow: auto;height: 100%;">
     <div *ngFor="let item of data">
       <busipay-image-subset
         *ngIf="item.img === selectedItem"
@@ -8,7 +8,7 @@
       ></busipay-image-subset>
     </div>
   </div>
-  <div class="col-md-4">
+  <div class="col-md-4" style="overflow: auto;height: 100%;">
     <mat-list>
       <mat-list-item
         *ngFor="let item of data"

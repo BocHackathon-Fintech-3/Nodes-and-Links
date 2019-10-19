@@ -20,6 +20,7 @@ import { PayComponent } from './components/pay/pay.component';
 import { ImageSubsetComponent } from './components/image-subset/image-subset.component';
 import { InvoiceListComponent } from './components/invoice-list/invoice-list.component';
 import { FormsModule } from '@angular/forms';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { FormsModule } from '@angular/forms';
     MatInputModule,
     MatCheckboxModule,
     FormsModule,
+    FlexLayoutModule,
     RouterModule.forRoot(APP_ROUTES, { onSameUrlNavigation: 'reload' })
   ],
   providers: [],
