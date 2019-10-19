@@ -22,6 +22,8 @@ export class DndComponent implements OnInit {
   IdentityPoolId = 'eu-west-1:ef71e09a-28e0-40fd-91a7-a3479c4ec1da';
   s3;
   uploadTimestamp: number;
+  loading = false;
+  progress = 0;
 
   constructor(
     private _router: Router,
@@ -47,6 +49,8 @@ export class DndComponent implements OnInit {
     this.files = files;
     this.uploadTimestamp = Date.now();
     let counter = 0;
+    let progressCounter = 0;
+    this.loading = true;
     Promise.all(
       files.map(droppedFile => {
         return new Promise(res => {
@@ -65,6 +69,8 @@ export class DndComponent implements OnInit {
                   console.log('File allowed');
                   console.log(droppedFile.relativePath, file);
                   await this.uploadToS3(file);
+                  progressCounter++;
+                  this.progress = (progressCounter * 100) / files.length;
                   res();
                 } else {
                   // File type is not allowed
@@ -83,6 +89,8 @@ export class DndComponent implements OnInit {
         });
       })
     ).then(() => {
+      this.loading = false;
+      this.progress = 0;
       this._router.navigate(['/review', this.uploadTimestamp]);
     });
 

@@ -10,7 +10,8 @@ import {
   MatListModule,
   MatInputModule,
   MatCheckboxModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatProgressBarModule
 } from '@angular/material';
 import { BocLoginComponent } from './components/boc-login/boc-login.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -26,6 +27,7 @@ import { ExportComponent } from './components/export/export.component';
 import { DndComponent } from './components/dnd/dnd.component';
 import { NgxFileDropModule } from 'ngx-file-drop';
 import { EmptyComponent } from './components/empty/empty.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -49,11 +51,13 @@ import { EmptyComponent } from './components/empty/empty.component';
     MatListModule,
     MatInputModule,
     MatCheckboxModule,
+    MatProgressBarModule,
     FormsModule,
     FlexLayoutModule,
     RouterModule.forRoot(APP_ROUTES, { onSameUrlNavigation: 'reload' }),
     NgxFileDropModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    NgxSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
