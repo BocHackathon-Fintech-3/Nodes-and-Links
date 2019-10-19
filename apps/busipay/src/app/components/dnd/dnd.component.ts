@@ -111,7 +111,7 @@ export class DndComponent implements OnInit {
           panelClass: 'snack-bar-success'
         });
 
-        // this._router.navigate(['/review']);
+        this._router.navigate(['/review', this.uploadTimestamp]);
       })
       .catch((error: any) => {
         this._snackBar.open('Something went wrong.', '', {

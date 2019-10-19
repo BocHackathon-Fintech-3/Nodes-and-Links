@@ -1,15 +1,19 @@
 import { Routes } from '@angular/router';
-import { AppComponent } from './app.component';
+import { DndComponent } from './components/dnd/dnd.component';
+import { InvoiceListComponent } from './components/invoice-list/invoice-list.component';
+import { EmptyComponent } from './components/empty/empty.component';
 
 export const APP_ROUTES: Routes = [
   {
     path: '',
-    component: AppComponent,
-    children: [
-      {
-        path: 'boc-callback',
-        component: AppComponent
-      }
-    ]
+    component: DndComponent
+  },
+  {
+    path: 'review/:uploadTimestamp',
+    component: InvoiceListComponent
+  },
+  {
+    path: 'boc-callback',
+    component: EmptyComponent
   }
 ];

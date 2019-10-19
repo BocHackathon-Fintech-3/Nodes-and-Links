@@ -25,6 +25,69 @@ export class InvoiceListComponent implements OnInit {
       boxes: [
         { top: 540, left: 605, width: 100, height: 50, label: 'Balance Due' }
       ]
+    },
+    {
+      img: 'assets/img.png',
+      pay: true,
+      balance: 154.06,
+      iban: 'CY17 0020 0128 0000 0012 0052 7601',
+      boxes: [
+        { top: 540, left: 605, width: 100, height: 50, label: 'Balance Due' }
+      ]
+    },
+    {
+      img: 'assets/img.png',
+      pay: true,
+      balance: 154.06,
+      iban: 'CY17 0020 0128 0000 0012 0052 7601',
+      boxes: [
+        { top: 540, left: 605, width: 100, height: 50, label: 'Balance Due' }
+      ]
+    },
+    {
+      img: 'assets/img.png',
+      pay: true,
+      balance: 154.06,
+      iban: 'CY17 0020 0128 0000 0012 0052 7601',
+      boxes: [
+        { top: 540, left: 605, width: 100, height: 50, label: 'Balance Due' }
+      ]
+    },
+    {
+      img: 'assets/img.png',
+      pay: true,
+      balance: 154.06,
+      iban: 'CY17 0020 0128 0000 0012 0052 7601',
+      boxes: [
+        { top: 540, left: 605, width: 100, height: 50, label: 'Balance Due' }
+      ]
+    },
+    {
+      img: 'assets/img.png',
+      pay: true,
+      balance: 154.06,
+      iban: 'CY17 0020 0128 0000 0012 0052 7601',
+      boxes: [
+        { top: 540, left: 605, width: 100, height: 50, label: 'Balance Due' }
+      ]
+    },
+    {
+      img: 'assets/img.png',
+      pay: true,
+      balance: 154.06,
+      iban: 'CY17 0020 0128 0000 0012 0052 7601',
+      boxes: [
+        { top: 540, left: 605, width: 100, height: 50, label: 'Balance Due' }
+      ]
+    },
+    {
+      img: 'assets/img.png',
+      pay: true,
+      balance: 154.06,
+      iban: 'CY17 0020 0128 0000 0012 0052 7601',
+      boxes: [
+        { top: 540, left: 605, width: 100, height: 50, label: 'Balance Due' }
+      ]
     }
   ];
   constructor() {}

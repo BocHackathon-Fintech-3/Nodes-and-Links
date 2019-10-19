@@ -1,14 +1,5 @@
 <div style="width: 100%;height:100%;" class="row">
-  <div class="col-md-8" style="overflow: auto;height: 100%;">
-    <div *ngFor="let item of data">
-      <busipay-image-subset
-        *ngIf="item.img === selectedItem"
-        [src]="item.img"
-        [boxes]="item.boxes"
-      ></busipay-image-subset>
-    </div>
-  </div>
-  <div class="col-md-4" fxLayout="column" style="overflow: auto;height: 100%;">
+  <div class="col-md-4" fxLayout="column" style="height: 100%;">
     <div fxFlex="0 0 60px" style="padding-top: 17px;">
       <busipay-available-balance
         style="font-size: 19px;position: relative;top: 5px;left: 18px;"
@@ -19,7 +10,7 @@
       ></busipay-export>
       <busipay-pay [toPay]="data" style="float:right;"></busipay-pay>
     </div>
-    <mat-list fxFlex="0 0 calc(100% - 60px)">
+    <mat-list fxFlex="0 0 calc(100% - 60px)" style="overflow: auto;">
       <mat-list-item
         *ngFor="let item of data"
         (click)="click(item)"
@@ -49,5 +40,14 @@
         </mat-card>
       </mat-list-item>
     </mat-list>
+  </div>
+  <div class="col-md-8" style="overflow: auto;height: 100%;">
+    <div *ngFor="let item of data">
+      <busipay-image-subset
+        *ngIf="item.img === selectedItem"
+        [src]="item.img"
+        [boxes]="item.boxes"
+      ></busipay-image-subset>
+    </div>
   </div>
 </div>

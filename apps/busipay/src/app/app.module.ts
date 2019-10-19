@@ -25,6 +25,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { ExportComponent } from './components/export/export.component';
 import { DndComponent } from './components/dnd/dnd.component';
 import { NgxFileDropModule } from 'ngx-file-drop';
+import { EmptyComponent } from './components/empty/empty.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { NgxFileDropModule } from 'ngx-file-drop';
     ImageSubsetComponent,
     InvoiceListComponent,
     ExportComponent,
-    DndComponent
+    DndComponent,
+    EmptyComponent
   ],
   imports: [
     BrowserModule,
