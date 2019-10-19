@@ -46,35 +46,42 @@ export class DndComponent implements OnInit {
   public dropped(files: NgxFileDropEntry[]) {
     this.files = files;
     this.uploadTimestamp = Date.now();
-    for (const droppedFile of files) {
-      // Is it a file?
-      if (droppedFile.fileEntry.isFile) {
-        const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
-        fileEntry.file((file: File) => {
-          //Todo: Perform File Size Check First
-          if (
-            ['application/pdf', 'image/png', 'image/jpeg'].find(
-              t => t === file.type
-            )
-          ) {
-            // Here you can access the real file
-            console.log('File allowed');
-            console.log(droppedFile.relativePath, file);
-            this.uploadToS3(file);
+    Promise.all(
+      files.map(droppedFile => {
+        return new Promise(res => {
+          // Is it a file?
+          if (droppedFile.fileEntry.isFile) {
+            const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
+            fileEntry.file(async (file: File) => {
+              //Todo: Perform File Size Check First
+              if (
+                ['application/pdf', 'image/png', 'image/jpeg'].find(
+                  t => t === file.type
+                )
+              ) {
+                // Here you can access the real file
+                console.log('File allowed');
+                console.log(droppedFile.relativePath, file);
+                await this.uploadToS3(file);
+                res();
+              } else {
+                // File type is not allowed
+                console.log('File is not allowed');
+                console.log(droppedFile.relativePath, file);
+                return;
+              }
+            });
           } else {
-            // File type is not allowed
-            console.log('File is not allowed');
-            console.log(droppedFile.relativePath, file);
-            return;
+            // It was a directory (empty directories are added, otherwise only files)
+            const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
+            console.log('Files Directory');
+            console.log(droppedFile.relativePath, fileEntry);
           }
         });
-      } else {
-        // It was a directory (empty directories are added, otherwise only files)
-        const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
-        console.log('Files Directory');
-        console.log(droppedFile.relativePath, fileEntry);
-      }
-    }
+      })
+    ).then(() => {
+      this._router.navigate(['/review', this.uploadTimestamp]);
+    });
 
     // this.invoiceService.getAll(this.uploadTimestamp);
     // this.invoiceService.getAll().then(invoices => {
@@ -100,18 +107,16 @@ export class DndComponent implements OnInit {
       })
       .promise();
 
-    fileUploadPromise
+    return fileUploadPromise
       .then(data => {
         console.log(data);
-        this.textractService.process(this.uploadTimestamp, data).subscribe();
-        this._snackBar.open('Invoice(s) successfully uploaded.', '', {
-          duration: 3000,
-          horizontalPosition: 'right',
-          verticalPosition: 'bottom',
-          panelClass: 'snack-bar-success'
+        return new Promise(res => {
+          this.textractService
+            .process(this.uploadTimestamp, data)
+            .subscribe(() => {
+              res();
+            });
         });
-
-        this._router.navigate(['/review', this.uploadTimestamp]);
       })
       .catch((error: any) => {
         this._snackBar.open('Something went wrong.', '', {
