@@ -1,1 +1,3 @@
-<span>Remaining: €{{ availableBalance }}</span>
+<span *ngIf="availableBalance"
+  >Remaining: €{{ availableBalance.toFixed(2) }}</span
+>

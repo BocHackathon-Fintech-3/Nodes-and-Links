@@ -31,4 +31,8 @@ export class BocService {
   public checkSubscription() {
     return this.http.get(`${this.url}check-subscription`);
   }
+
+  public logout() {
+    return this.http.get(`${this.url}logout`);
+  }
 }

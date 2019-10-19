@@ -17,7 +17,11 @@ export class ExportComponent implements OnInit {
     const result = Papa.unparse(
       this.toExport
         .filter(item => item.pay)
-        .map(item => ({ Balance: item.balance, IBAN: item.iban })),
+        .map(item => ({
+          Title: item.title,
+          Balance: item.balance,
+          IBAN: item.iban
+        })),
       { headers: true }
     );
     console.log(result);

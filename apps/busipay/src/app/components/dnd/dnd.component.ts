@@ -46,37 +46,40 @@ export class DndComponent implements OnInit {
   public dropped(files: NgxFileDropEntry[]) {
     this.files = files;
     this.uploadTimestamp = Date.now();
+    let counter = 0;
     Promise.all(
       files.map(droppedFile => {
         return new Promise(res => {
-          // Is it a file?
-          if (droppedFile.fileEntry.isFile) {
-            const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
-            fileEntry.file(async (file: File) => {
-              //Todo: Perform File Size Check First
-              if (
-                ['application/pdf', 'image/png', 'image/jpeg'].find(
-                  t => t === file.type
-                )
-              ) {
-                // Here you can access the real file
-                console.log('File allowed');
-                console.log(droppedFile.relativePath, file);
-                await this.uploadToS3(file);
-                res();
-              } else {
-                // File type is not allowed
-                console.log('File is not allowed');
-                console.log(droppedFile.relativePath, file);
-                return;
-              }
-            });
-          } else {
-            // It was a directory (empty directories are added, otherwise only files)
-            const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
-            console.log('Files Directory');
-            console.log(droppedFile.relativePath, fileEntry);
-          }
+          setTimeout(() => {
+            // Is it a file?
+            if (droppedFile.fileEntry.isFile) {
+              const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
+              fileEntry.file(async (file: File) => {
+                //Todo: Perform File Size Check First
+                if (
+                  ['application/pdf', 'image/png', 'image/jpeg'].find(
+                    t => t === file.type
+                  )
+                ) {
+                  // Here you can access the real file
+                  console.log('File allowed');
+                  console.log(droppedFile.relativePath, file);
+                  await this.uploadToS3(file);
+                  res();
+                } else {
+                  // File type is not allowed
+                  console.log('File is not allowed');
+                  console.log(droppedFile.relativePath, file);
+                  return;
+                }
+              });
+            } else {
+              // It was a directory (empty directories are added, otherwise only files)
+              const fileEntry = droppedFile.fileEntry as FileSystemDirectoryEntry;
+              console.log('Files Directory');
+              console.log(droppedFile.relativePath, fileEntry);
+            }
+          }, 3000 * counter++);
         });
       })
     ).then(() => {
