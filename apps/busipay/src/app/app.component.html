@@ -4,3 +4,21 @@
   <busipay-available-balance></busipay-available-balance>
   <busipay-pay></busipay-pay>
 </mat-toolbar>
+<div class="container-fluid">
+  <div style="position: absolute;">
+    <busipay-image-subset
+      class="col-md-12"
+      src="assets/inv.jpg"
+      [boxes]="[
+        { top: 265, left: 630, width: 195, height: 50, label: 'Total' }
+      ]"
+    ></busipay-image-subset>
+    <busipay-image-subset
+      class="col-md-12"
+      src="assets/img.png"
+      [boxes]="[
+        { top: 540, left: 605, width: 100, height: 50, label: 'Total' }
+      ]"
+    ></busipay-image-subset>
+  </div>
+</div>

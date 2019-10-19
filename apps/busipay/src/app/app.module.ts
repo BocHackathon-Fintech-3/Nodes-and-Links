@@ -10,9 +10,10 @@ import { RouterModule } from '@angular/router';
 import { APP_ROUTES } from './app.routes';
 import { AvailableBalanceComponent } from './components/available-balance/available-balance.component';
 import { PayComponent } from './components/pay/pay.component';
+import { ImageSubsetComponent } from './components/image-subset/image-subset.component';
 
 @NgModule({
-  declarations: [AppComponent, BocLoginComponent, AvailableBalanceComponent, PayComponent],
+  declarations: [AppComponent, BocLoginComponent, AvailableBalanceComponent, PayComponent, ImageSubsetComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
