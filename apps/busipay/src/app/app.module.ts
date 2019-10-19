@@ -9,7 +9,8 @@ import {
   MatCardModule,
   MatListModule,
   MatInputModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+  MatSnackBarModule
 } from '@angular/material';
 import { BocLoginComponent } from './components/boc-login/boc-login.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -22,6 +23,8 @@ import { InvoiceListComponent } from './components/invoice-list/invoice-list.com
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ExportComponent } from './components/export/export.component';
+import { DndComponent } from './components/dnd/dnd.component';
+import { NgxFileDropModule } from 'ngx-file-drop';
 
 @NgModule({
   declarations: [
@@ -31,7 +34,8 @@ import { ExportComponent } from './components/export/export.component';
     PayComponent,
     ImageSubsetComponent,
     InvoiceListComponent,
-    ExportComponent
+    ExportComponent,
+    DndComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +49,9 @@ import { ExportComponent } from './components/export/export.component';
     MatCheckboxModule,
     FormsModule,
     FlexLayoutModule,
-    RouterModule.forRoot(APP_ROUTES, { onSameUrlNavigation: 'reload' })
+    RouterModule.forRoot(APP_ROUTES, { onSameUrlNavigation: 'reload' }),
+    NgxFileDropModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
