@@ -27,4 +27,8 @@ export class BocService {
   public pay(payments) {
     return this.http.post(`${this.url}payments`, payments);
   }
+
+  public checkSubscription() {
+    return this.http.get(`${this.url}check-subscription`);
+  }
 }

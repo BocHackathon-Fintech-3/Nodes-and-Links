@@ -21,7 +21,7 @@ export class BocLoginComponent implements OnInit {
             window.close();
           });
         } else {
-          this.boc.getAvailableBalance().subscribe(
+          this.boc.checkSubscription().subscribe(
             () => {},
             () => {
               this.boc.getLoginUrl().subscribe(({ loginUrl }: any) => {
