@@ -1,0 +1,5 @@
+{
+    "name": "boc",
+    "version": "0.0.1",
+    "main": "boc_api.js"
+}
