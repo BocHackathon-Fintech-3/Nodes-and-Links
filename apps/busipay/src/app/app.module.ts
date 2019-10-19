@@ -21,6 +21,7 @@ import { ImageSubsetComponent } from './components/image-subset/image-subset.com
 import { InvoiceListComponent } from './components/invoice-list/invoice-list.component';
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ExportComponent } from './components/export/export.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     AvailableBalanceComponent,
     PayComponent,
     ImageSubsetComponent,
-    InvoiceListComponent
+    InvoiceListComponent,
+    ExportComponent
   ],
   imports: [
     BrowserModule,

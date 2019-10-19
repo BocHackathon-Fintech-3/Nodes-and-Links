@@ -23,7 +23,7 @@ export class ImageSubsetComponent implements OnInit {
   }[];
   imgWidth;
   imgHeight;
-  private readonly desiredWidth = 982;
+  private readonly desiredWidth = 960;
 
   constructor() {}
 

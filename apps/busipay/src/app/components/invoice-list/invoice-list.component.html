@@ -8,8 +8,18 @@
       ></busipay-image-subset>
     </div>
   </div>
-  <div class="col-md-4" style="overflow: auto;height: 100%;">
-    <mat-list>
+  <div class="col-md-4" fxLayout="column" style="overflow: auto;height: 100%;">
+    <div fxFlex="0 0 60px" style="padding-top: 17px;">
+      <busipay-available-balance
+        style="font-size: 19px;position: relative;top: 5px;left: 18px;"
+      ></busipay-available-balance>
+      <busipay-export
+        [toExport]="data"
+        style="float:right;margin-left:5px;"
+      ></busipay-export>
+      <busipay-pay [toPay]="data" style="float:right;"></busipay-pay>
+    </div>
+    <mat-list fxFlex="0 0 calc(100% - 60px)">
       <mat-list-item
         *ngFor="let item of data"
         (click)="click(item)"
