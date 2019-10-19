@@ -3,23 +3,37 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatToolbarModule, MatButtonModule } from '@angular/material';
+import {
+  MatToolbarModule,
+  MatButtonModule,
+  MatSnackBarModule
+} from '@angular/material';
 import { BocLoginComponent } from './components/boc-login/boc-login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { APP_ROUTES } from './app.routes';
 import { AvailableBalanceComponent } from './components/available-balance/available-balance.component';
 import { PayComponent } from './components/pay/pay.component';
+import { DndComponent } from './components/dnd/dnd.component';
+import { NgxFileDropModule } from 'ngx-file-drop';
 
 @NgModule({
-  declarations: [AppComponent, BocLoginComponent, AvailableBalanceComponent, PayComponent],
+  declarations: [
+    AppComponent,
+    BocLoginComponent,
+    AvailableBalanceComponent,
+    PayComponent,
+    DndComponent
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,
     HttpClientModule,
-    RouterModule.forRoot(APP_ROUTES, { onSameUrlNavigation: 'reload' })
+    RouterModule.forRoot(APP_ROUTES, { onSameUrlNavigation: 'reload' }),
+    NgxFileDropModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
