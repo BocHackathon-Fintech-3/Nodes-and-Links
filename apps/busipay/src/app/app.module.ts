@@ -7,7 +7,9 @@ import {
   MatToolbarModule,
   MatButtonModule,
   MatCardModule,
-  MatListModule
+  MatListModule,
+  MatInputModule,
+  MatCheckboxModule
 } from '@angular/material';
 import { BocLoginComponent } from './components/boc-login/boc-login.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -16,6 +18,8 @@ import { APP_ROUTES } from './app.routes';
 import { AvailableBalanceComponent } from './components/available-balance/available-balance.component';
 import { PayComponent } from './components/pay/pay.component';
 import { ImageSubsetComponent } from './components/image-subset/image-subset.component';
+import { InvoiceListComponent } from './components/invoice-list/invoice-list.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -23,7 +27,8 @@ import { ImageSubsetComponent } from './components/image-subset/image-subset.com
     BocLoginComponent,
     AvailableBalanceComponent,
     PayComponent,
-    ImageSubsetComponent
+    ImageSubsetComponent,
+    InvoiceListComponent
   ],
   imports: [
     BrowserModule,
@@ -33,6 +38,9 @@ import { ImageSubsetComponent } from './components/image-subset/image-subset.com
     HttpClientModule,
     MatCardModule,
     MatListModule,
+    MatInputModule,
+    MatCheckboxModule,
+    FormsModule,
     RouterModule.forRoot(APP_ROUTES, { onSameUrlNavigation: 'reload' })
   ],
   providers: [],
