@@ -5,20 +5,29 @@
   <busipay-pay></busipay-pay>
 </mat-toolbar>
 <div class="container-fluid">
-  <div style="position: absolute;">
-    <busipay-image-subset
-      class="col-md-12"
-      src="assets/inv.jpg"
-      [boxes]="[
-        { top: 265, left: 630, width: 195, height: 50, label: 'Total' }
-      ]"
-    ></busipay-image-subset>
-    <busipay-image-subset
-      class="col-md-12"
-      src="assets/img.png"
-      [boxes]="[
-        { top: 540, left: 605, width: 100, height: 50, label: 'Total' }
-      ]"
-    ></busipay-image-subset>
+  <div style="position: absolute;width: 100%;" class="row">
+    <div class="col-md-8">
+      <busipay-image-subset
+        src="assets/inv.jpg"
+        [boxes]="[
+          { top: 265, left: 630, width: 195, height: 50, label: 'Total' }
+        ]"
+      ></busipay-image-subset>
+      <busipay-image-subset
+        src="assets/img.png"
+        [boxes]="[
+          { top: 540, left: 605, width: 100, height: 50, label: 'Total' }
+        ]"
+      ></busipay-image-subset>
+    </div>
+    <div class="col-md-4">
+      <mat-list>
+        <mat-list-item>
+          <mat-card style="width: 100%;">
+            test
+          </mat-card>
+        </mat-list-item>
+      </mat-list>
+    </div>
   </div>
 </div>
