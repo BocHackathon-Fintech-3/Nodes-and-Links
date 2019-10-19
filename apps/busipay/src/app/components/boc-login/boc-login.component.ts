@@ -41,6 +41,7 @@ export class BocLoginComponent implements OnInit {
     }
     this.handle = setInterval(() => {
       this.boc.getAvailableBalance().subscribe(() => {
+        this.boc.availableBalanceChanged.next();
         clearInterval(this.handle);
         this.handle = null;
         this.loginUrl = null;
