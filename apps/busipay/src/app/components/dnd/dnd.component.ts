@@ -6,6 +6,9 @@ import {
 } from 'ngx-file-drop';
 import * as AWS from 'aws-sdk';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { TextractService } from '../../api/textract.service';
+import { Router } from '@angular/router';
+import { InvoiceService } from '../../api/invoice.service';
 
 @Component({
   selector: 'busipay-dnd',
@@ -20,7 +23,12 @@ export class DndComponent implements OnInit {
   s3;
   uploadTimestamp: number;
 
-  constructor(private _snackBar: MatSnackBar) {
+  constructor(
+    private _router: Router,
+    private _snackBar: MatSnackBar,
+    private textractService: TextractService,
+    private invoiceService: InvoiceService
+  ) {
     AWS.config.update({
       region: this.bucketRegion,
       credentials: new AWS.CognitoIdentityCredentials({
@@ -67,6 +75,11 @@ export class DndComponent implements OnInit {
         console.log(droppedFile.relativePath, fileEntry);
       }
     }
+
+    // this.invoiceService.getAll(this.uploadTimestamp);
+    // this.invoiceService.getAll().then(invoices => {
+    //   console.log(invoices);
+    // });
   }
 
   public fileOver(event) {
@@ -89,12 +102,16 @@ export class DndComponent implements OnInit {
 
     fileUploadPromise
       .then(data => {
+        console.log(data);
+        this.textractService.process(this.uploadTimestamp, data).subscribe();
         this._snackBar.open('Invoice(s) successfully uploaded.', '', {
           duration: 3000,
           horizontalPosition: 'right',
           verticalPosition: 'bottom',
           panelClass: 'snack-bar-success'
         });
+
+        // this._router.navigate(['/review']);
       })
       .catch((error: any) => {
         this._snackBar.open('Something went wrong.', '', {
