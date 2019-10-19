@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { BocService } from '../../api/boc.service';
 
 @Component({
@@ -7,6 +7,7 @@ import { BocService } from '../../api/boc.service';
   styleUrls: ['./pay.component.scss']
 })
 export class PayComponent implements OnInit {
+  @Input() toPay: any[];
   availableBalance;
   constructor(private boc: BocService) {}
 
@@ -25,10 +26,11 @@ export class PayComponent implements OnInit {
 
   click() {
     this.boc
-      .pay([
-        { amount: 1, iban: 'CY17 0020 0128 0000 0012 0052 7600' },
-        { amount: 2, iban: 'CY17 0020 0128 0000 0012 0052 7600' }
-      ])
+      .pay(
+        this.toPay
+          .filter(item => item.pay)
+          .map(item => ({ amount: item.balance, iban: item.iban }))
+      )
       .subscribe(() => {
         this.boc.availableBalanceChanged.next();
       });

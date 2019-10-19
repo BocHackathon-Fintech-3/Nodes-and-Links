@@ -1,0 +1,14 @@
+.mat-list-item {
+  margin: 10px 0;
+  height: auto !important;
+}
+
+.mat-list-item.active {
+  mat-card {
+    background-color: #ddd;
+  }
+}
+
+mat-form-field {
+  width: 100%;
+}

@@ -1,8 +1,15 @@
-<mat-toolbar color="primary">
-  <span>BusiPay</span>
-  <busipay-boc-login></busipay-boc-login>
-  <busipay-available-balance></busipay-available-balance>
-  <busipay-pay></busipay-pay>
-</mat-toolbar>
+<div fxLayout="column" style="height: 100%;">
+  <mat-toolbar fxFlex="60px" color="primary">
+    <span>BusiPay</span>
+    <busipay-boc-login></busipay-boc-login>
+  </mat-toolbar>
+  <div fxFlex="0 0 calc(100%-60px)" class="container-fluid">
+    <router-outlet></router-outlet>
+  </div>
 
-<busipay-dnd> </busipay-dnd>
+  <!-- <div>
+    <busipay-invoice-list
+      style="display: inline-block;width:100%;height: 100%;"
+    ></busipay-invoice-list>
+  </div> -->
+</div>
