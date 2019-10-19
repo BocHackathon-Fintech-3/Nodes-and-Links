@@ -45,10 +45,10 @@ export class ImageSubsetComponent implements OnInit {
       this.imgWidth = `${ratio * width}px`;
       console.log('this.imgWidth', this.imgWidth);
       this.newBoxes = this.boxes.map(box => ({
-        top: `${ratio * box.top}px`,
-        left: `${ratio * box.left}px`,
-        width: `${ratio * box.width}px`,
-        height: `${ratio * box.height}px`,
+        top: `${ratio * box.top * height}px`,
+        left: `${ratio * box.left * width}px`,
+        width: `${ratio * box.width * width}px`,
+        height: `${ratio * box.height * height}px`,
         label: box.label
       }));
       console.log('this.newBoxes', this.newBoxes);
