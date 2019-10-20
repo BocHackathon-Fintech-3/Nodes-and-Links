@@ -26,7 +26,7 @@ export class InvoiceService {
   }
 
   public async getAll(uploadTimestamp?) {
-    const invoices = {};
+    const uploadData = {};
     console.log('S3 get all', uploadTimestamp);
     const params = {
       Bucket: this.bucketName,
@@ -41,29 +41,40 @@ export class InvoiceService {
         const batchKey = val.Key.split('/').shift();
         const filename = val.Key.split('/').pop();
         const invoiceName = filename.substring(0, filename.lastIndexOf('.'));
-        if (!invoices[batchKey]) {
-          invoices[batchKey] = {};
+        if (!uploadData[batchKey]) {
+          uploadData[batchKey] = { count: 0, invoices: {} };
         }
-        if (!invoices[batchKey][invoiceName]) {
-          invoices[batchKey][invoiceName] = {};
+        if (!uploadData[batchKey]['invoices'][invoiceName]) {
+          uploadData[batchKey]['invoices'][invoiceName] = {
+            img_url: '',
+            filename: '',
+            json: {}
+          };
         }
         const fileType = val.Key.substr(val.Key.lastIndexOf('.') + 1);
-        if (fileType !== 'json') {
-          invoices[batchKey][invoiceName].img_url =
-            'https://busipay.s3-eu-west-1.amazonaws.com/' + val.Key;
-          return new Promise(resIn => resIn());
-        } else {
+        console.log(fileType);
+        if (fileType === 'json') {
           return new Promise(resIn => {
             this.s3.getObject(
               { Bucket: this.bucketName, Key: val.Key },
               (err, jdata) => {
-                invoices[batchKey][invoiceName].json = JSON.parse(jdata.Body);
+                uploadData[batchKey]['invoices'][invoiceName].json = JSON.parse(
+                  jdata.Body
+                );
+
+                uploadData[batchKey].count++;
                 resIn();
               }
             );
           });
         }
+        // if (['pdf', 'png', 'jpeg'].find(t => t === fileType)) {
+        uploadData[batchKey]['invoices'][invoiceName].img_url =
+          'https://busipay.s3-eu-west-1.amazonaws.com/' + val.Key;
+        uploadData[batchKey]['invoices'][invoiceName].filename = filename;
+        //   return new Promise(resIn => resIn());
+        // }
       })
-    ).then(() => invoices);
+    ).then(() => uploadData);
   }
 }
