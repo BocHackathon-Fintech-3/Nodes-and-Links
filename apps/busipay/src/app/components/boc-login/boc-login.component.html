@@ -1,0 +1,12 @@
+<span>
+  <a
+    mat-raised-button
+    *ngIf="loginUrl"
+    [href]="loginUrl"
+    target="_blank"
+    (click)="click()"
+    >Login</a
+  ><button mat-raised-button *ngIf="!loginUrl" (click)="logout()">
+    Logout
+  </button>
+</span>

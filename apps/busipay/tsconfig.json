@@ -1,7 +1,11 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "types": ["node", "jest"]
+    "types": ["node", "jest"],
+    "paths": {
+      "jszip": ["../node_modules/jszip/dist/jszip.min.js"],
+      "stream": ["../node_modules/readable-stream/readable.js"]
+    }
   },
   "include": ["**/*.ts"]
 }

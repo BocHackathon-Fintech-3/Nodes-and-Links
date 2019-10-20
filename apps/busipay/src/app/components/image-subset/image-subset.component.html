@@ -1,0 +1,21 @@
+<div style="position: relative;">
+  <div>
+    <div style="position: relative;">
+      <img [src]="src" [style.width]="imgWidth" [style.height]="imgHeight" />
+    </div>
+    <div
+      *ngFor="let box of newBoxes"
+      [style.top]="box.top"
+      [style.left]="box.left"
+      style="position: absolute;"
+    >
+      <span
+        [style.width]="box.width"
+        [style.height]="box.height"
+        style="display: inline-block;outline: 4px solid red;outline-offset: 5px;"
+        class="bounding-box"
+      ></span>
+      <span style="color:red;margin-left:10px;">{{ box.label }}</span>
+    </div>
+  </div>
+</div>

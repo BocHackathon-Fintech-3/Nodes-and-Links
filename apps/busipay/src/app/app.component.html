@@ -1,10 +1,27 @@
-<!-- <header class="flex">
-  <img
-    alt="Nx logo"
-    width="75"
-    src="https://nx.dev/assets/images/nx-logo-white.svg"
-  />
-  <h1>Welcome to {{ title }}!</h1>
-</header>
-<main>
-</main> -->
+<div fxLayout="column" style="height: 100%;">
+  <mat-toolbar
+    fxFlex="60px"
+    layout="row"
+    layout-align="space-between center"
+    color="primary"
+    style="padding: 11px 16px; display: block;"
+  >
+    <span
+      (click)="click()"
+      style="cursor: pointer;font-size: 32px;"
+      class="accent"
+      >BusiPay</span
+    >
+    <busipay-boc-login style="float:right;"></busipay-boc-login>
+    <button mat-button routerLink="/my-invoices" style="margin-left:60px;">
+      My Invoices
+    </button>
+  </mat-toolbar>
+  <div
+    fxFlex="0 0 calc(100%-60px)"
+    class="container-fluid"
+    style="overflow: auto;"
+  >
+    <router-outlet></router-outlet>
+  </div>
+</div>

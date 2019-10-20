@@ -1,0 +1,38 @@
+<div class="dnd center">
+  <ngx-file-drop
+    *ngIf="!loading"
+    dropZoneClassName="drop-zone"
+    contentClassName="drop-content"
+    dropZoneLabel="Drop files here"
+    (onFileDrop)="dropped($event)"
+    (onFileOver)="fileOver($event)"
+    (onFileLeave)="fileLeave($event)"
+  >
+    <ng-template
+      ngx-file-drop-content-tmp
+      let-openFileSelector="openFileSelector"
+    >
+      <div layout="column" layout-align="center center">
+        <h2 class="md-display-1">
+          Drag & Drop your invoices (pdf, png, jpeg) for processing!
+        </h2>
+        <p>OR</p>
+        <div>
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="openFileSelector()"
+          >
+            Browse Files
+          </button>
+        </div>
+      </div>
+    </ng-template>
+  </ngx-file-drop>
+  <mat-progress-bar
+    style="position:relative;margin-top:20%;"
+    *ngIf="loading"
+    mode="determinate"
+    [value]="progress"
+  ></mat-progress-bar>
+</div>
