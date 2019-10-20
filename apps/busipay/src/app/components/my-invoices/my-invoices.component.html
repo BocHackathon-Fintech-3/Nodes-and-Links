@@ -1,0 +1,67 @@
+<div class="invoices-list-container" fxFlex="1 1 auto">
+  <div class="cards-container" *ngIf="!noInvoices && !loading">
+    <h3 class="md-headline" style="padding: 16px;">
+      Invoices
+      <!-- <div class="float-right md-caption">Download All</div> -->
+      <busipay-zip-invoices-download
+        [uploadTimestamp]=""
+        [toExport]="invoices"
+      ></busipay-zip-invoices-download>
+    </h3>
+    <mat-card
+      class="example-card"
+      style="padding: 0px; margin: 8px;"
+      *ngFor="let process of invoices | keyvalue"
+    >
+      <mat-card-header style="padding: 8px;background-color: darkseagreen;">
+        <mat-card-title layout="row" layout-align="space-between center">
+          {{ process.value.count }} Invoices processed on:
+          {{ process.key | date: 'MMM dd, yyyy - HH:mm' }}
+          <busipay-zip-invoices-download
+            [uploadTimestamp]="process.key"
+            [toExport]="invoices"
+          ></busipay-zip-invoices-download>
+
+          <button
+            mat-raised-button
+            color="accent"
+            class="float-right invoice-button"
+            routerLink="/review/{{ process.key }}"
+          >
+            Show All
+          </button>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content *ngIf="process.value.count > 0">
+        <mat-list>
+          <mat-list-item
+            *ngFor="let invoice of process.value.invoices | keyvalue"
+          >
+            <h4 mat-line>{{ invoice.key }}</h4>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div
+    fxLayout="column"
+    fxLayoutAlign="center"
+    fxFlex="1 1 auto"
+    class="no-invoices"
+    style="text-align: center; padding-top:48px;"
+    *ngIf="noInvoices && !loading"
+  >
+    <p class="mat-headline">No invoices added yet!</p>
+
+    <busipay-dnd></busipay-dnd>
+  </div>
+  <div
+    fxLayout="column"
+    style="text-align: center;align-items: center; padding-top:48px;"
+    *ngIf="loading"
+  >
+    <p class="mat-headline" style="padding-bottom:48px;">Loading Invoices!</p>
+
+    <mat-spinner></mat-spinner>
+  </div>
+</div>
