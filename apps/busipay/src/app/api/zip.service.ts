@@ -28,8 +28,24 @@ export class ZipService {
           _.map(datatoExport, (upload, key) => {
             console.log(upload);
             const uploadFolder = zip.folder(key);
-            const invoicesImgFolder = uploadFolder.folder('Scanned Invoices');
+            const invoicesImgFolder = uploadFolder.folder('Invoices');
             const invoices = upload.invoices;
+
+            const csvtoExport = Papa.unparse(
+              _.map(invoices, invoice => ({
+                Filename: invoice.filename,
+                Balance: invoice.json.busipay.balance,
+                IBAN: invoice.json.busipay.iban
+              })),
+              { headers: true }
+            );
+            console.log(csvtoExport);
+            const csvData = new Blob([csvtoExport], {
+              type: 'text/csv;charset=utf-8;'
+            });
+
+            uploadFolder.file('index.csv', csvData);
+
             return Object.keys(invoices).map(async invoiceName => {
               if (!invoices[invoiceName].img_url) {
                 return new Promise(resIn => resIn());
@@ -60,7 +76,6 @@ export class ZipService {
           })
         )
       ).then(() => {
-        // zip.file('Hello.txt', 'Hello World\n');
         zip.generateAsync({ type: 'blob' }).then(content => {
           resolve(content);
         });
