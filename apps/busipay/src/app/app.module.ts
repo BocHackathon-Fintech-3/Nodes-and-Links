@@ -11,8 +11,10 @@ import {
   MatInputModule,
   MatCheckboxModule,
   MatSnackBarModule,
-  MatProgressBarModule
+  MatProgressBarModule,
+  MatIconModule
 } from '@angular/material';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { BocLoginComponent } from './components/boc-login/boc-login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
@@ -28,6 +30,8 @@ import { DndComponent } from './components/dnd/dnd.component';
 import { NgxFileDropModule } from 'ngx-file-drop';
 import { EmptyComponent } from './components/empty/empty.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { MyInvoicesComponent } from './components/my-invoices/my-invoices.component';
+import { ZipInvoicesDownloadComponent } from './components/zip-invoices-download/zip-invoices-download.component';
 
 @NgModule({
   declarations: [
@@ -39,17 +43,21 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     InvoiceListComponent,
     ExportComponent,
     DndComponent,
-    EmptyComponent
+    EmptyComponent,
+    MyInvoicesComponent,
+    ZipInvoicesDownloadComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    MatProgressSpinnerModule,
     MatToolbarModule,
     MatButtonModule,
     HttpClientModule,
     MatCardModule,
     MatListModule,
     MatInputModule,
+    MatIconModule,
     MatCheckboxModule,
     MatProgressBarModule,
     FormsModule,

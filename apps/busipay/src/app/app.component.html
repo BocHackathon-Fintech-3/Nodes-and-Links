@@ -8,8 +8,15 @@
   >
     <span (click)="click()" style="cursor: pointer;">BusiPay</span>
     <busipay-boc-login style="float:right;"></busipay-boc-login>
+    <button mat-button routerLink="/my-invoices" style="margin-left:60px;">
+      My Invoices
+    </button>
   </mat-toolbar>
-  <div fxFlex="0 0 calc(100%-60px)" class="container-fluid">
+  <div
+    fxFlex="0 0 calc(100%-60px)"
+    class="container-fluid"
+    style="overflow: auto;"
+  >
     <router-outlet></router-outlet>
   </div>
 </div>
