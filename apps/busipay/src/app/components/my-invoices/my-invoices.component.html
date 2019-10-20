@@ -38,6 +38,20 @@
             *ngFor="let invoice of process.value.invoices | keyvalue"
           >
             <h4 mat-line>{{ invoice.key }}</h4>
+            <div
+              *ngIf="
+                invoice.value.json.busipay && invoice.value.json.busipay.pay
+              "
+              style="float: right;color:green;font-weight:600;padding-right:8px"
+            >
+              PAID
+            </div>
+            <div
+              *ngIf="invoice.value.json.busipay"
+              style="float: right;font-weight:400;"
+            >
+              €{{ invoice.value.json.busipay.balance.toFixed(2) }}
+            </div>
           </mat-list-item>
         </mat-list>
       </mat-card-content>

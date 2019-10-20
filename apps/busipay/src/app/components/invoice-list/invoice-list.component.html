@@ -8,7 +8,11 @@
         [toExport]="data"
         style="float:right;margin-left:5px;"
       ></busipay-export>
-      <busipay-pay [toPay]="data" style="float:right;"></busipay-pay>
+      <busipay-pay
+        [toPay]="data"
+        [rawData]="rawData"
+        style="float:right;"
+      ></busipay-pay>
     </div>
     <mat-list fxFlex="0 0 calc(100% - 60px)" style="overflow: auto;">
       <mat-list-item
@@ -19,19 +23,31 @@
       >
         <mat-card class="col-md-12"
           ><mat-checkbox
+            [disabled]="item.pay"
             [(ngModel)]="item.pay"
             style="position:relative;float:left;top: 6px;"
           ></mat-checkbox>
           <mat-card-header>
-            <mat-card-title>{{ item.title }}</mat-card-title>
+            <mat-card-title
+              >{{ item.title
+              }}<span *ngIf="item.pay" style="color:green">
+                - PAID</span
+              ></mat-card-title
+            >
           </mat-card-header>
           <mat-card-content>
             <mat-form-field>
-              <input matInput placeholder="IBAN" [(ngModel)]="item.iban" />
+              <input
+                matInput
+                placeholder="IBAN"
+                [(ngModel)]="item.iban"
+                [disabled]="item.pay"
+              />
             </mat-form-field>
             <mat-form-field>
               <input
                 matInput
+                [disabled]="item.pay"
                 type="number"
                 placeholder="Balance Due"
                 [(ngModel)]="item.balance"

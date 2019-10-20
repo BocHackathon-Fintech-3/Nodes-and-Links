@@ -62,6 +62,7 @@ export class InvoiceService {
                   jdata.Body
                 );
 
+                uploadData[batchKey]['invoices'][invoiceName].jsonKey = val.Key;
                 uploadData[batchKey].count++;
                 resIn();
               }
