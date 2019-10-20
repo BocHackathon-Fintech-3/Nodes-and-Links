@@ -15,7 +15,10 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "jszip": ["../node_modules/jszip/dist/jszip.min.js"],
+      "stream": ["../node_modules/readable-stream/readable.js"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

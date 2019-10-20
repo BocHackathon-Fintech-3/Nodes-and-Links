@@ -52,6 +52,7 @@
     "ngx-spinner": "^8.0.3",
     "papaparse": "^5.1.0",
     "rxjs": "~6.4.0",
+    "stream": "0.0.2",
     "zone.js": "^0.9.1"
   },
   "devDependencies": {
