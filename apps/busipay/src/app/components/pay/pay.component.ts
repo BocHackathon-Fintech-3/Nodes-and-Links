@@ -48,7 +48,10 @@ export class PayComponent implements OnInit {
     this.boc
       .pay(
         this.toPay
-          .filter(item => item.pay)
+          .filter(item => {
+            if (item.selected) item.pay = true;
+            return item.selected;
+          })
           .map(item => ({ amount: item.balance, iban: item.iban }))
       )
       .subscribe(() => {

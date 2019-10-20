@@ -83,6 +83,7 @@ export class InvoiceListComponent implements OnInit {
             title: rawDataKey,
             img: rawDataVal.img_url,
             pay: rawDataVal.json.busipay ? rawDataVal.json.busipay.pay : false,
+            selected: false,
             balance,
             boxes
           };
