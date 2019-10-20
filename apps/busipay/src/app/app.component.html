@@ -6,7 +6,12 @@
     color="primary"
     style="padding: 11px 16px; display: block;"
   >
-    <span (click)="click()" style="cursor: pointer;">BusiPay</span>
+    <span
+      (click)="click()"
+      style="cursor: pointer;font-size: 32px;"
+      class="accent"
+      >BusiPay</span
+    >
     <busipay-boc-login style="float:right;"></busipay-boc-login>
     <button mat-button routerLink="/my-invoices" style="margin-left:60px;">
       My Invoices
